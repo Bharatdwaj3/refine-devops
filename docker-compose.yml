@@ -1,0 +1,64 @@
+name: lrn-k86-lmr
+
+
+services:
+  db:
+    image: mongo:latest
+    container_name: mongo-kbr
+    restart: always
+    ports:
+      - "27117:27117"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASS}
+      MONGO_INITDB_DATABASE: ${MONGO_DB}
+    volumes:
+      - mongo-data:/data/db
+
+
+
+  user:
+    build: ./User
+    container_name: ecom-usr-kbr
+    image: user
+    ports:
+      - "9001:3001"
+    command: node server.js
+    depends_on:
+    - db
+
+  cart:
+    build: ./Cart
+    container_name: ecom-cart-kbr
+    image: cart
+    ports:
+      - "9002:3003"
+    command: node server.js 
+    depends_on:
+    - db 
+
+  product:
+    build: ./Product
+    container_name: ecom-product-kbr
+    image: product
+    ports:
+      - "9003:3002"
+    command: node server.js
+    depends_on: 
+    - db
+  
+  frontend:
+    build: ./frontend
+    container_name: ecom-ui-kbr
+    image: frontend
+    ports:
+      - "9000:80"
+    depends_on:
+      - user
+      - cart
+      - product
+    labels:
+      kompose.service.type: nodeport
+    
+volumes:
+  mongo-data:
