@@ -14,7 +14,7 @@ const mongo_cluster = process.env.MONGO_CLUSTER;
 const mongo_database = process.env.MONGO_DBNAME;
 
 
-mongoose.connect(`mongodb://${mongo_username}:${mongo_password}@${mongo_cluster}/${mongo_database}?retryWrites=true&w=majority`
+mongoose.connect(`mongodb://${mongo_username}:${mongo_password}@${mongo_cluster}/${mongo_database}?retryWrites=true&w=majority&authSource=admin`
 , { useNewUrlParser: true, useUnifiedTopology: true })
 .then(() => console.log(`Connected to: ${mongoose.connection.name}`))
 .catch(err => console.log(err));

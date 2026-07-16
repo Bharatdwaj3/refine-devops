@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: frontend-nginx-config
-  namespace: ecommerce
+  namespace: game-stora
 data:
   default.conf: |
     server {
