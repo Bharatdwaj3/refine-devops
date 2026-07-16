@@ -26,6 +26,8 @@ spec:
         io.kompose.network/lrn-k86-default: "true"
         io.kompose.service: frontend
     spec:
+      imagePullSecrets:
+        - name: ghcr-secret
       containers:
         - image: game-stora-frontend
           imagePullPolicy: Always

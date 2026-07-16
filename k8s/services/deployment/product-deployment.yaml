@@ -24,6 +24,8 @@ spec:
         io.kompose.network/lrn-k86-default: "true"
         io.kompose.service: product
     spec:
+      imagePullSecrets:
+        - name: ghcr-secret
       containers:
         - args:
             - node
