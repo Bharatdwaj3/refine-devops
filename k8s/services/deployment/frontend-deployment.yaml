@@ -27,8 +27,8 @@ spec:
         io.kompose.service: frontend
     spec:
       containers:
-        - image: frontend
-          imagePullPolicy: IfNotPresent
+        - image: game-stora-frontend
+          imagePullPolicy: Always
           name: frontend
           ports:
             - containerPort: 80

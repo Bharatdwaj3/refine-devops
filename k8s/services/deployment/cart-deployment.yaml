@@ -28,8 +28,8 @@ spec:
         - args:
             - node
             - server.js
-          image: game-stora-cart:latest
-          imagePullPolicy: Never
+          image: game-stora-cart
+          imagePullPolicy: Always
           name: cart
           ports:
             - containerPort: 3003

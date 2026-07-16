@@ -1,0 +1,29 @@
+namespace: game-stora
+
+resources:
+  - deployment/user-deployment.yaml
+  - deployment/product-deployment.yaml
+  - deployment/cart-deployment.yaml
+  - deployment/frontend-deployment.yaml
+  - deployment/db-deployment.yaml
+  - deployment/mongo-data-persistentvolumeclaim.yaml
+  - service/user-service.yaml
+  - service/product-service.yaml
+  - service/cart-service.yaml
+  - service/frontend-service.yaml
+  - service/db-service.yaml
+  - frontend-nginx-config.yaml
+
+images:
+  - name: game-stora-user
+    newName: ghcr.io/Bharatdwaj3/refine-devops/user
+    newTag: latest
+  - name: game-stora-product
+    newName: ghcr.io/Bharatdwaj3/refine-devops/product
+    newTag: latest
+  - name: game-stora-cart
+    newName: ghcr.io/Bharatdwaj3/refine-devops/cart
+    newTag: latest
+  - name: game-stora-frontend
+    newName: ghcr.io/Bharatdwaj3/refine-devops/frontend
+    newTag: latest

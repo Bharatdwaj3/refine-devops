@@ -28,8 +28,8 @@ spec:
         - args:
             - node
             - server.js
-          image: game-stora-product:latest
-          imagePullPolicy: Never
+          image: game-stora-product
+          imagePullPolicy: Always
           name: product
           ports:
             - containerPort: 3002

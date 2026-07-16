@@ -12,8 +12,8 @@ jobs:
 
     strategy:
       matrix:
+        
         service: [user, product, cart, frontend]
-
     steps:
       - uses: actions/checkout@v4
 

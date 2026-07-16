@@ -31,8 +31,8 @@ spec:
         - args:
             - node
             - server.js
-          image: game-stora-user:latest
-          imagePullPolicy: Never
+          image: game-stora-user
+          imagePullPolicy: Always
           name: user
           ports:
             - containerPort: 3001
