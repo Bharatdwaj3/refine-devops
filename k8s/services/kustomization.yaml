@@ -17,13 +17,13 @@ resources:
 images:
   - name: game-stora-user
     newName: ghcr.io/bharatdwaj3/refine-devops/user
-    newTag: 22c23ab
+    newTag: 0efd7ea
   - name: game-stora-product
     newName: ghcr.io/bharatdwaj3/refine-devops/product
-    newTag: 22c23ab
+    newTag: 0efd7ea
   - name: game-stora-cart
     newName: ghcr.io/bharatdwaj3/refine-devops/cart
-    newTag: 22c23ab
+    newTag: 0efd7ea
   - name: game-stora-frontend
     newName: ghcr.io/bharatdwaj3/refine-devops/frontend
-    newTag: 22c23ab
+    newTag: 0efd7ea
