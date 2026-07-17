@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         
-        service: [user, product, cart, frontend]
+        service: [User, Product, Cart, frontend]
     steps:
       - uses: actions/checkout@v4
 
@@ -41,7 +41,7 @@ jobs:
 
     strategy:
       matrix:
-        service: [user, product, cart, frontend]
+        service: [User, Product, Cart, frontend]
 
     steps:
       - uses: actions/checkout@v4
@@ -53,11 +53,14 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Set lowercase service name
+        run: echo "SERVICE_LC=$(echo '${{ matrix.service }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+
       - name: Build and push ${{ matrix.service }}
         uses: docker/build-push-action@v5
         with:
           context: ./${{ matrix.service }}
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/${{ matrix.service }}:${{ github.sha }}
+          tags: ghcr.io/${{ github.repository_owner }}/refine-devops/${{ env.SERVICE_LC }}:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
