@@ -1,10 +1,10 @@
 namespace: game-stora
 
 resources:
-  - deployment/user-deployment.yaml
-  - deployment/product-deployment.yaml
-  - deployment/cart-deployment.yaml
-  - deployment/frontend-deployment.yaml
+  - deployment/user-rollout.yaml
+  - deployment/product-rollout.yaml
+  - deployment/cart-rollout.yaml
+  - deployment/frontend-rollout.yaml
   - deployment/db-deployment.yaml
   - deployment/mongo-data-persistentvolumeclaim.yaml
   - service/user-service.yaml

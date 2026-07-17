@@ -1,19 +1,30 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
 metadata:
   annotations:
     kompose.cmd: kompose convert -f docker-compose.yml
     kompose.version: 1.31.2 (a92241f79)
   creationTimestamp: null
   labels:
-    io.kompose.service: cart
-  name: cart
+    io.kompose.service: product
+  name: product
 spec:
+  strategy:
+    canary:
+      steps:
+      - setWeight: 20
+      - pause: {duration: 30s}
+      - setWeight: 40
+      - pause: {duration: 30s}
+      - setWeight: 60
+      - pause: {duration: 30s}
+      - setWeight: 80
+      - pause: {duration: 30s}
+      - setWeight: 100
   replicas: 1
   selector:
     matchLabels:
-      io.kompose.service: cart
-  strategy: {}
+      io.kompose.service: product
   template:
     metadata:
       annotations:
@@ -22,7 +33,7 @@ spec:
       creationTimestamp: null
       labels:
         io.kompose.network/lrn-k86-default: "true"
-        io.kompose.service: cart
+        io.kompose.service: product
     spec:
       imagePullSecrets:
         - name: ghcr-secret
@@ -30,43 +41,43 @@ spec:
         - args:
             - node
             - server.js
-          image: game-stora-cart
+          image: game-stora-product
           imagePullPolicy: Always
-          name: cart
+          name: product
           ports:
-            - containerPort: 3003
+            - containerPort: 3002
               protocol: TCP
           resources: {}
           env:
             - name: MONGO_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: cart-secrets
+                  name: product-secrets
                   key: MONGO_USERNAME
             - name: MONGO_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: cart-secrets
+                  name: product-secrets
                   key: MONGO_PASSWORD
             - name: MONGO_CLUSTER
               valueFrom:
                 secretKeyRef:
-                  name: cart-secrets
+                  name: product-secrets
                   key: MONGO_CLUSTER
             - name: MONGO_DBNAME
               valueFrom:
                 secretKeyRef:
-                  name: cart-secrets
+                  name: product-secrets
                   key: MONGO_DBNAME
             - name: ACCESS_TOKEN
               valueFrom:
                 secretKeyRef:
-                  name: cart-secrets
+                  name: product-secrets
                   key: ACCESS_TOKEN
             - name: PORT
               valueFrom:
                 secretKeyRef:
-                  name: cart-secrets
+                  name: product-secrets
                   key: PORT
       restartPolicy: Always
 status: {}

@@ -1,5 +1,5 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
 metadata:
   annotations:
     kompose.cmd: kompose convert -f docker-compose.yml -o /tmp/kompose-out/
@@ -10,11 +10,22 @@ metadata:
     io.kompose.service: frontend
   name: frontend
 spec:
+  strategy:
+    canary:
+      steps:
+      - setWeight: 20
+      - pause: {duration: 30s}
+      - setWeight: 40
+      - pause: {duration: 30s}
+      - setWeight: 60
+      - pause: {duration: 30s}
+      - setWeight: 80
+      - pause: {duration: 30s}
+      - setWeight: 100
   replicas: 1
   selector:
     matchLabels:
       io.kompose.service: frontend
-  strategy: {}
   template:
     metadata:
       annotations:
