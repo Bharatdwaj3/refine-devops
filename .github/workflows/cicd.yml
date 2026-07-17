@@ -16,7 +16,6 @@ jobs:
         service: [User, Product, Cart, frontend]
     steps:
       - uses: actions/checkout@v4
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -45,6 +44,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
@@ -54,13 +55,15 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set lowercase service name
-        run: echo "SERVICE_LC=$(echo '${{ matrix.service }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+        run: |
+          echo "SERVICE_LC=$(echo '${{ matrix.service }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+          echo "OWNER_LC=$(echo '${{ github.repository_owner }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
 
       - name: Build and push ${{ matrix.service }}
         uses: docker/build-push-action@v5
         with:
           context: ./${{ matrix.service }}
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/refine-devops/${{ env.SERVICE_LC }}:latest
+          tags: ghcr.io/${{ env.OWNER_LC }}/refine-devops/${{ env.SERVICE_LC }}:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
