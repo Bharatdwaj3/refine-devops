@@ -22,6 +22,7 @@ spec:
       - pause: {duration: 30s}
       - setWeight: 100
   replicas: 3
+  progressDeadlineSeconds: 120
   selector:
     matchLabels:
       io.kompose.service: cart
@@ -48,6 +49,12 @@ spec:
             - containerPort: 3003
               protocol: TCP
           resources: {}
+          readinessProbe:
+            tcpSocket:
+              port: 3003
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            failureThreshold: 3
           env:
             - name: MONGO_USERNAME
               valueFrom:
